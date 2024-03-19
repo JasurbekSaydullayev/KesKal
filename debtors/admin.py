@@ -5,5 +5,4 @@ from debtors.models import Debtor
 
 @admin.register(Debtor)
 class DebtorAdmin(admin.ModelAdmin):
-    list_display = ('full_name','phone_number', 'amount', 'vendor')
-
+    list_display = ('full_name', 'phone_number', 'amount', 'vendor')
