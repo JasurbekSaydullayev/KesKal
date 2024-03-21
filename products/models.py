@@ -12,7 +12,7 @@ class Products(models.Model):
     bar_code = models.PositiveBigIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
-    market = models.ForeignKey(Market, to_field='name', on_delete=models.CASCADE, related_name='products')
+    market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name='products')
 
     def __str__(self):
         return self.name

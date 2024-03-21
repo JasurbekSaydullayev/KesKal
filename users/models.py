@@ -1,9 +1,18 @@
+import jwt
 import uuid
+
+from datetime import datetime, timedelta
+
+from django.conf import settings
+from django.contrib.auth.models import (
+    AbstractBaseUser, PermissionsMixin
+)
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from market.models import Market
+from .managers import UserManager
 
 User_Choice = (
     ('Director', 'Director'),
@@ -11,17 +20,18 @@ User_Choice = (
 )
 
 
-class User(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    full_name = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=13)
+class User(AbstractUser):
+    phone_number = models.CharField(max_length=13, unique=True)
     type = models.CharField(max_length=25, choices=User_Choice)
     password = models.CharField(max_length=128)
-    market = models.ForeignKey(Market, to_field='name', on_delete=models.CASCADE, related_name='user')
+    market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name='user', null=True,
+                               blank=True)
     is_confirmed = models.BooleanField(default=False)
     is_fired = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
+    username = None
+
+    USERNAME_FIELD = 'phone_number'
+    objects = UserManager()
 
     def __str__(self):
-        return self.full_name
+        return self.first_name + ' ' + self.last_name
