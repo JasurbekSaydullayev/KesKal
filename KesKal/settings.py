@@ -75,9 +75,9 @@ WSGI_APPLICATION = 'KesKal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'KesKal',
+        'NAME': 'keskal',
         'USER': 'postgres',
-        'PASSWORD': '856329471',
+        'PASSWORD': '1',
         'HOST': 'localhost',
         'PORT': 5432,
     }
