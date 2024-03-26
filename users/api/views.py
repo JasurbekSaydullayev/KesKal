@@ -1,7 +1,8 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-
+from django.contrib.auth.hashers import make_password
 from market.models import Market, Statistics
 from ..models import User
 from .serializers import UserSerializerForRegistration
@@ -12,13 +13,23 @@ from .validators import check_phone_number
 class GetMethod(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializerForRegistration
+    http_method_names = ['get', 'post']
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'phone_number'
 
     def list(self, request, *args, **kwargs):
-        user = list(User.objects.all().values())
-        return Response(user)
+        user = request.user
+        market = user.market
+        if user.type == "Vendor":
+            return Response({"message": "Sotuvchilarni ko'rish uchun ruxsat yo'q"})
+        market_users = User.objects.filter(market=market)
+        if market_users is None:
+            return Response({"message": "Sizda sotuvchilar yo'q"})
+        serializer = self.serializer_class(market_users, many=True)
+        return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
-        data = list(User.objects.filter(id=kwargs['pk']).values())
+        data = list(User.objects.filter(phone_number=kwargs['phone_number']).values())
         return Response(data)
 
     def create(self, request, *args, **kwargs):
@@ -31,14 +42,14 @@ class GetMethod(viewsets.ModelViewSet):
                                 status=status.HTTP_400_BAD_REQUEST)
             market = Market.objects.filter(name=user_serializer_data.validated_data['market'],
                                            stir=user_serializer_data.validated_data['stir']).first()
-            # Userni tipini tekshiramiz
             if user_serializer_data.validated_data['type'] == "Director":
-                # agar user tipi direktor bo'lsa ro'ythat o'tilishi
-                # kutilayotgan marketning direktori bor yo'qligiga tekshiramiz
+                check_stir_market = Market.objects.filter(stir=user_serializer_data.validated_data['stir']).first()
+                if check_stir_market:
+                    return Response({"message": "Bunday stirga ega market avval ro'yhatdan o'tgan"},
+                                    status=status.HTTP_200_OK)
                 if market is not None:
                     return Response({"message": "Ushbu marketda direktor allaqachon ro'yhatdan o'tgan"})
                 else:
-                    # agar hammasi to'g'ri kelsa market yaratamiz lekin saqlamaymiz
                     new_market = Market.objects.create(name=user_serializer_data.validated_data['market'],
                                                        stir=user_serializer_data.validated_data['stir'])
                     statistics = Statistics.objects.create(today_debt=0, debt_collection=0,
@@ -57,7 +68,7 @@ class GetMethod(viewsets.ModelViewSet):
             phone_number = user_serializer_data.validated_data['phone_number']
             user_type = user_serializer_data.validated_data['type']
             first_name = user_serializer_data.validated_data['first_name']
-            password = user_serializer_data.validated_data['password']
+            password = make_password(user_serializer_data.validated_data['password'])
             if user_type == "Director":
                 market = user_serializer_data.validated_data['market']
                 user = User.objects.create(phone_number=phone_number, first_name=first_name, password=password,
@@ -72,15 +83,3 @@ class GetMethod(viewsets.ModelViewSet):
         else:
             status_code = status.HTTP_400_BAD_REQUEST
             return Response({"message": "Please fill the details correctly", "status": status_code})
-
-    def update(self, request, *args, **kwargs):
-        user_details = User.objects.get(id=kwargs['pk'])
-        user_serializer_data = UserSerializerForRegistration(
-            user_details, data=request.data, partial=True)
-        if user_serializer_data.is_valid():
-            user_serializer_data.save()
-            status_code = status.HTTP_201_CREATED
-            return Response({"message": "User Updated Successfully", "status": status_code})
-        else:
-            status_code = status.HTTP_400_BAD_REQUEST
-            return Response({"message": "User data Not found", "status": status_code})

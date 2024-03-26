@@ -10,7 +10,5 @@ class UserSerializerForRegistration(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'phone_number', 'type', 'password', 'market', 'stir')
-
-
-
+        fields = ('id', 'first_name', 'phone_number', 'password', 'type', 'market', 'stir')
+        lookup_field = 'phone_number'
