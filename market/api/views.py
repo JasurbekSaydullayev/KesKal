@@ -26,3 +26,9 @@ class StaticModelViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         return Response({"message": "Method Not Allowed"}, status=405)
+
+    def update(self, request, *args, **kwargs):
+        return Response({"message": "Method Not Allowed"}, status=405)
+
+    def delete(self, request, *args, **kwargs):
+        return Response({"message": "Method Not Allowed"}, status=405)

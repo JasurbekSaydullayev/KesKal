@@ -1,6 +1,14 @@
+from django.urls import path
 from .views import *
 from rest_framework.routers import DefaultRouter
 
-router = DefaultRouter()
-router.register('users', GetMethod, basename='data')
-urlpatterns = router.urls
+router_user = DefaultRouter()
+router_user.register('users', GetMethod, basename='users')
+
+# urlpatterns = [
+#     path('users/change-password/', ChangePasswordView.as_view(), name='change-password')
+# ]
+
+urlpatterns = router_user.urls
+
+
