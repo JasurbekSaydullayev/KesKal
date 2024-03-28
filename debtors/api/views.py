@@ -13,3 +13,15 @@ class DebtorsModelViewSet(viewsets.ModelViewSet):
         user = request.user
         debtors = Debtor.objects.filter(market=user.market).all()
         return Response(debtors)
+
+    def retrieve(self, request, *args, **kwargs):
+        return Response({"message": "Method Not Allowed"}, status=405)
+
+    def create(self, request, *args, **kwargs):
+        return Response({"message": "Method Not Allowed"}, status=405)
+
+    def update(self, request, *args, **kwargs):
+        return Response({"message": "Method Not Allowed"}, status=405)
+
+    def delete(self, request, *args, **kwargs):
+        return Response({"message": "Method Not Allowed"}, status=405)
