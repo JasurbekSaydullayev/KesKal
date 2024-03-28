@@ -15,6 +15,7 @@ class DebtorsModelViewSet(viewsets.ModelViewSet):
         return Response(debtors)
 
     def retrieve(self, request, *args, **kwargs):
+        # debtors = Debtor.objects.filter()
         return Response({"message": "Method Not Allowed"}, status=405)
 
     def create(self, request, *args, **kwargs):

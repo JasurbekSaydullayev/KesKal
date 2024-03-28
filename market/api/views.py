@@ -9,7 +9,7 @@ from .serializers import StatisticsSerializer, MarketSerializer
 class StaticModelViewSet(viewsets.ModelViewSet):
     queryset = Statistics.objects.all()
     serializer_class = StatisticsSerializer
-    http_method_names = ['get']
+    # http_method_names = ['get']
     permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
@@ -37,7 +37,7 @@ class StaticModelViewSet(viewsets.ModelViewSet):
 class MarketModelViewSet(viewsets.ModelViewSet):
     queryset = Market.objects.all()
     serializer_class = MarketSerializer
-    http_method_names = ['get']
+    # http_method_names = ['get']
     permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
