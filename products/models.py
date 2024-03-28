@@ -22,3 +22,4 @@ class Trade(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='trade')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='trade')
     created_at = models.DateTimeField(auto_now_add=True)
+    market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name='trade', default="")
