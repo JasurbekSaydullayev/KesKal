@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
+from rest_framework.views import APIView
+
 from market.models import Market, Statistics
 from ..models import User
 from .serializers import UserSerializerForRegistration
@@ -83,3 +85,20 @@ class GetMethod(viewsets.ModelViewSet):
         else:
             status_code = status.HTTP_400_BAD_REQUEST
             return Response({"message": "Please fill the details correctly", "status": status_code})
+
+
+# class ChangePasswordView(APIView):
+#     model = User
+#     serializer_class = UserChangePasswordSerializer
+#     http_method_names = ['post']
+#
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data, context={'request': request})
+#         if serializer.is_valid():
+#             user = request.user
+#             if not user.check_password(serializer.validated_data.get('old_password')):
+#                 return Response({"error": "Invalid old password"}, status=status.HTTP_400_BAD_REQUEST)
+#             user.set_password(serializer.validated_data.get('new_password'))
+#             user.save()
+#             return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

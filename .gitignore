@@ -1,22 +1,22 @@
-# Created by https://www.gitignore.io
+# Создано с помощью https://www.gitignore.io
 
 ### OSX ###
 .DS_Store
 .AppleDouble
 .LSOverride
 
-# Icon must end with two \r
+# Иконки, должны заканчиваться двумя \r
 Icon
 
 
-# Thumbnails
+# Миниатюры
 ._*
 
-# Files that might appear on external disk
+# Файлы, которые могут появиться на внешнем диске
 .Spotlight-V100
 .Trashes
 
-# Directories potentially created on remote AFP share
+# Директории, которые могут быть созданы на удаленном сетевом диске AFP
 .AppleDB
 .AppleDesktop
 Network Trash Folder
@@ -25,14 +25,14 @@ Temporary Items
 
 
 ### Python ###
-# Byte-compiled / optimized / DLL files
+# Скомпилированные в байт код / оптимизированные / DLL файлы
 __pycache__/
 *.py[cod]
 
-# C extensions
+# C расширения
 *.so
 
-# Distribution / packaging
+# Распространение / упаковка
 .Python
 env/
 build/
@@ -50,16 +50,16 @@ var/
 *.egg
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+# Обычно эти файлы записываются сценарием Python из шаблона
+# до того, как PyInstaller создает exe, чтобы внедрить в него дату / другую информацию.
 *.manifest
 *.spec
 
-# Installer logs
+# Журналы установки
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Отчеты о юнит-тестировании / покрытии
 htmlcov/
 .tox/
 .coverage
@@ -67,11 +67,11 @@ htmlcov/
 nosetests.xml
 coverage.xml
 
-# Translations
+# Переводы
 *.mo
 *.pot
 
-# Sphinx documentation
+# Документация Sphinx
 docs/_build/
 
 # PyBuilder
