@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
-from rest_framework.views import APIView
 
 from market.models import Market, Statistics
 from ..models import User
