@@ -62,3 +62,5 @@ class TradeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     lookup_field = 'phone_number'
 
+
+
